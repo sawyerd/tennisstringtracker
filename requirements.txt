@@ -1,0 +1,4 @@
+soco>=0.30
+apscheduler>=3.10
+requests>=2.31
+gTTS>=2.5

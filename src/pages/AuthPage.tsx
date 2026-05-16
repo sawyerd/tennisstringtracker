@@ -24,11 +24,11 @@ export function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-canvas flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Logo / Icon */}
         <div className="flex justify-center mb-8">
-          <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center shadow-lg">
+          <div className="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center shadow-lg">
             <svg className="w-9 h-9 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <circle cx="12" cy="12" r="9" />
               <path strokeLinecap="round" d="M3.5 12c0-2.5 1.5-5 4-6.5M20.5 12c0 2.5-1.5 5-4 6.5M12 3.5c2.5 0 5 1.5 6.5 4M12 20.5c-2.5 0-5-1.5-6.5-4" />

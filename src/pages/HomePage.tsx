@@ -27,14 +27,14 @@ function RacketCard({ racket, onRestring, onRetire }: {
 
   const statusLabel = {
     green: 'Good',
-    yellow: 'Getting worn',
-    red: 'Restring soon',
+    yellow: 'Watch',
+    red: 'Replace',
     none: 'No strings',
   }
 
   const barColor = {
-    green: 'bg-green-500',
-    yellow: 'bg-yellow-400',
+    green: 'bg-brand',
+    yellow: 'bg-amber-400',
     red: 'bg-red-500',
     none: 'bg-slate-200',
   }
@@ -42,19 +42,16 @@ function RacketCard({ racket, onRestring, onRetire }: {
   return (
     <Card>
       <div className="flex items-start gap-3">
-        <StatusDot status={racket.status} size="lg" className="mt-1" />
+        <StatusDot status={racket.status} size="lg" className="mt-1.5" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h3 className="text-sm font-semibold text-slate-900 truncate">{racket.name}</h3>
+            <h3 className="text-base font-bold text-ink truncate">{racket.name}</h3>
             <Badge
               variant={
-                racket.status === 'green'
-                  ? 'green'
-                  : racket.status === 'yellow'
-                  ? 'yellow'
-                  : racket.status === 'red'
-                  ? 'red'
-                  : 'gray'
+                racket.status === 'green' ? 'green'
+                : racket.status === 'yellow' ? 'yellow'
+                : racket.status === 'red' ? 'red'
+                : 'gray'
               }
               className="flex-shrink-0"
             >
@@ -64,26 +61,21 @@ function RacketCard({ racket, onRestring, onRetire }: {
 
           {job ? (
             <>
-              <p className="text-sm text-slate-600 mt-0.5">
-                {job.brand} {job.model} · {job.gauge}
+              <p className="text-sm text-ink/70 mt-0.5 font-medium">
+                {job.brand} {job.model} <span className="text-ink/40 font-normal">· {job.gauge}</span>
               </p>
-              <p className="text-xs text-slate-400 mt-0.5">
-                {job.tension_mains}
-                {job.tension_crosses ? `/${job.tension_crosses}` : ''} lbs ·{' '}
-                {new Date(job.date_strung).toLocaleDateString('en-US', {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
+              <p className="text-xs text-ink/40 mt-0.5">
+                {job.tension_mains}{job.tension_crosses ? `/${job.tension_crosses}` : ''} lbs ·{' '}
+                {new Date(job.date_strung).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
               </p>
 
               {/* Progress bar */}
-              <div className="mt-2.5">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-slate-500">{racket.totalHours}h played</span>
-                  <span className="text-xs text-slate-400">{job.hour_threshold}h threshold</span>
+              <div className="mt-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-semibold text-ink/60">{racket.totalHours}h played</span>
+                  <span className="text-xs text-ink/30">{job.hour_threshold}h limit</span>
                 </div>
-                <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div className="h-[7px] bg-black/[0.06] rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all ${barColor[racket.status]}`}
                     style={{ width: `${pct}%` }}
@@ -92,16 +84,16 @@ function RacketCard({ racket, onRestring, onRetire }: {
               </div>
 
               {/* Actions */}
-              <div className="flex gap-2 mt-3">
+              <div className="flex gap-2 mt-4">
                 <button
                   onClick={onRestring}
-                  className="flex-1 py-1.5 px-3 text-xs font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                  className="flex-1 py-2 px-3 text-xs font-semibold text-ink/60 bg-black/[0.04] rounded-lg hover:bg-black/[0.08] transition-colors"
                 >
                   Restring
                 </button>
                 <button
                   onClick={onRetire}
-                  className="flex-1 py-1.5 px-3 text-xs font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                  className="flex-1 py-2 px-3 text-xs font-semibold text-ink/60 bg-black/[0.04] rounded-lg hover:bg-black/[0.08] transition-colors"
                 >
                   Retire
                 </button>
@@ -109,10 +101,10 @@ function RacketCard({ racket, onRestring, onRetire }: {
             </>
           ) : (
             <>
-              <p className="text-sm text-slate-400 mt-0.5">No active strings</p>
+              <p className="text-sm text-ink/30 mt-0.5">No active strings</p>
               <button
                 onClick={onRestring}
-                className="mt-3 w-full py-1.5 px-3 text-xs font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+                className="mt-3 w-full py-2 px-3 text-xs font-semibold text-brand bg-brand-light rounded-lg hover:bg-brand/10 transition-colors"
               >
                 Add String Job
               </button>
@@ -380,9 +372,9 @@ export function HomePage({ user, onSignOut }: HomePageProps) {
         <div className="space-y-3">
           {/* Alerts for rackets needing restringing */}
           {rackets.some((r) => r.status === 'red') && (
-            <div className="p-3 bg-red-50 border border-red-100 rounded-2xl flex items-center gap-2">
+            <div className="p-3 bg-red-50 rounded-card flex items-center gap-2.5">
               <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse flex-shrink-0" />
-              <p className="text-sm text-red-700">
+              <p className="text-sm font-medium text-red-700">
                 {rackets.filter((r) => r.status === 'red').length} racket
                 {rackets.filter((r) => r.status === 'red').length !== 1 ? 's' : ''} need restringing
               </p>

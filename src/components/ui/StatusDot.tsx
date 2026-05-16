@@ -6,8 +6,8 @@ interface StatusDotProps {
 
 export function StatusDot({ status, size = 'md', className = '' }: StatusDotProps) {
   const colors = {
-    green: 'bg-green-500',
-    yellow: 'bg-yellow-400',
+    green: 'bg-brand',
+    yellow: 'bg-amber-400',
     red: 'bg-red-500',
     none: 'bg-slate-300',
   }
