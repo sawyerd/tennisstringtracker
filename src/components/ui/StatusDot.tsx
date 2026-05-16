@@ -1,5 +1,3 @@
-import React from 'react'
-
 interface StatusDotProps {
   status: 'green' | 'yellow' | 'red' | 'none'
   size?: 'sm' | 'md' | 'lg'

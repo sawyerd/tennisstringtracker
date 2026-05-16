@@ -1,4 +1,3 @@
-import React from 'react'
 import type { User } from '@supabase/supabase-js'
 import { Layout } from '../components/layout/Layout'
 import { Card } from '../components/ui/Card'
