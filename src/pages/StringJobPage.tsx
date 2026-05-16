@@ -116,7 +116,7 @@ export function StringJobPage({ user, onSignOut }: StringJobPageProps) {
             <div>
               <h3 className="text-sm font-semibold text-amber-900 mb-0.5">Retire Current Strings</h3>
               <p className="text-xs text-amber-700">
-                {existingJob.brand} {existingJob.model} &middot; {existingJob.gauge}
+                {existingJob.brand} {existingJob.model} &middot; {existingJob.gauge}g
               </p>
             </div>
 
@@ -216,7 +216,7 @@ export function StringJobPage({ user, onSignOut }: StringJobPageProps) {
                 className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent text-sm bg-white"
               >
                 {COMMON_GAUGES.map((g) => (
-                  <option key={g} value={g}>{g}</option>
+                  <option key={g} value={g}>{g}g</option>
                 ))}
               </select>
             </div>

@@ -61,7 +61,7 @@ export function StatsPage({ user, onSignOut }: StatsPageProps) {
                         {s.brand} {s.model}
                       </p>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-slate-500">{s.gauge}</span>
+                        <span className="text-xs text-slate-500">{s.gauge}g</span>
                         <Badge variant="gray">{s.jobCount} job{s.jobCount !== 1 ? 's' : ''}</Badge>
                         {s.brokeCount > 0 && <Badge variant="red">{s.brokeCount} broke</Badge>}
                         {s.cutCount > 0 && <Badge variant="default">{s.cutCount} cut</Badge>}

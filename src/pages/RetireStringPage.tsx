@@ -89,7 +89,7 @@ export function RetireStringPage({ user, onSignOut }: RetireStringPageProps) {
             {activeJob.brand} {activeJob.model}
           </p>
           <p className="text-sm text-slate-500 mt-0.5">
-            {activeJob.gauge} &middot; {activeJob.tension_mains}
+            {activeJob.gauge}g &middot; {activeJob.tension_mains}
             {activeJob.tension_crosses ? `/${activeJob.tension_crosses}` : ''} lbs
           </p>
           <p className="text-xs text-slate-400 mt-1">
