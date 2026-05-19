@@ -58,9 +58,7 @@ export function useRackets() {
       const result: RacketWithJob[] = (racketsData ?? []).map((r: Racket) => {
         const activeJob = activeJobsByRacket.get(r.id) ?? null
         const totalHours = activeJob ? (hoursByJob.get(activeJob.id) ?? 0) : 0
-        const status = activeJob
-          ? computeStatus(totalHours, activeJob.hour_threshold)
-          : 'none'
+        const status = activeJob ? computeStatus(totalHours, activeJob.hour_threshold) : 'none'
         return { ...r, activeJob, totalHours, status }
       })
 
@@ -79,24 +77,22 @@ export function useRackets() {
   const addRacket = async (name: string) => {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('Not authenticated')
+    const { error } = await supabase.from('rackets').insert({ name, user_id: user.id })
+    if (error) throw error
+    await fetchRackets()
+  }
 
-    const { error } = await supabase
-      .from('rackets')
-      .insert({ name, user_id: user.id })
-
+  const renameRacket = async (id: string, name: string) => {
+    const { error } = await supabase.from('rackets').update({ name }).eq('id', id)
     if (error) throw error
     await fetchRackets()
   }
 
   const deleteRacket = async (id: string) => {
-    const { error } = await supabase
-      .from('rackets')
-      .delete()
-      .eq('id', id)
-
+    const { error } = await supabase.from('rackets').delete().eq('id', id)
     if (error) throw error
     await fetchRackets()
   }
 
-  return { rackets, loading, error, refetch: fetchRackets, addRacket, deleteRacket }
+  return { rackets, loading, error, refetch: fetchRackets, addRacket, renameRacket, deleteRacket }
 }

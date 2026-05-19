@@ -54,14 +54,12 @@ export function StatsPage({ user, onSignOut }: StatsPageProps) {
           ) : (
             <div className="space-y-3">
               {stats.stringTypeStats.map((s, i) => (
-                <div key={`${s.brand}-${s.model}-${s.gauge}-${i}`}>
+                <div key={`${s.label}-${i}`}>
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-900 truncate">
-                        {s.brand} {s.model}
-                      </p>
+                      <p className="text-sm font-medium text-slate-900 truncate">{s.label}</p>
                       <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-xs text-slate-500">{s.gauge}g</span>
+                        {s.isHybrid && <Badge variant="default">Hybrid</Badge>}
                         <Badge variant="gray">{s.jobCount} job{s.jobCount !== 1 ? 's' : ''}</Badge>
                         {s.brokeCount > 0 && <Badge variant="red">{s.brokeCount} broke</Badge>}
                         {s.cutCount > 0 && <Badge variant="default">{s.cutCount} cut</Badge>}
@@ -72,12 +70,7 @@ export function StatsPage({ user, onSignOut }: StatsPageProps) {
                     </span>
                   </div>
                   <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-slate-900 rounded-full"
-                      style={{
-                        width: `${Math.min(100, (s.avgHours / 30) * 100)}%`,
-                      }}
-                    />
+                    <div className="h-full bg-brand rounded-full" style={{ width: `${Math.min(100, (s.avgHours / 30) * 100)}%` }} />
                   </div>
                 </div>
               ))}
@@ -151,9 +144,9 @@ export function StatsPage({ user, onSignOut }: StatsPageProps) {
                   {stats.stringTypeStats
                     .filter((s) => s.brokeCount + s.cutCount > 0)
                     .map((s, i) => (
-                      <div key={`${s.brand}-${s.model}-${i}`} className="flex items-center justify-between text-xs">
+                      <div key={`${s.label}-${i}`} className="flex items-center justify-between text-xs">
                         <span className="text-slate-700 truncate flex-1">
-                          {s.brand} {s.model}
+                          {s.label}
                         </span>
                         <div className="flex items-center gap-2 flex-shrink-0 ml-2">
                           {s.brokeCount > 0 && (

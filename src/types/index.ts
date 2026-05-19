@@ -9,11 +9,16 @@ export interface StringJob {
   id: string
   racket_id: string
   user_id: string
-  brand: string
-  model: string
-  gauge: string
-  tension_mains: number
-  tension_crosses: number | null
+  // Mains string
+  mains_brand: string
+  mains_model: string
+  mains_gauge: string
+  mains_tension: number
+  // Crosses string (null = same as mains / non-hybrid)
+  crosses_brand: string | null
+  crosses_model: string | null
+  crosses_gauge: string | null
+  crosses_tension: number | null
   date_strung: string
   hour_threshold: number
   is_active: boolean
@@ -22,6 +27,17 @@ export interface StringJob {
   retirement_date: string | null
   cost: number | null
   created_at: string
+}
+
+export function isHybrid(job: StringJob): boolean {
+  return !!job.crosses_brand
+}
+
+export function stringLabel(job: StringJob): string {
+  if (isHybrid(job)) {
+    return `${job.mains_brand} ${job.mains_model} / ${job.crosses_brand} ${job.crosses_model}`
+  }
+  return `${job.mains_brand} ${job.mains_model}`
 }
 
 export interface Session {

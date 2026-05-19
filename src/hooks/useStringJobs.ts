@@ -38,11 +38,14 @@ export function useStringJobs(racketId?: string) {
 
   const addStringJob = async (job: {
     racket_id: string
-    brand: string
-    model: string
-    gauge: string
-    tension_mains: number
-    tension_crosses: number | null
+    mains_brand: string
+    mains_model: string
+    mains_gauge: string
+    mains_tension: number
+    crosses_brand: string | null
+    crosses_model: string | null
+    crosses_gauge: string | null
+    crosses_tension: number | null
     date_strung: string
     hour_threshold: number
     notes: string | null
@@ -51,7 +54,6 @@ export function useStringJobs(racketId?: string) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) throw new Error('Not authenticated')
 
-    // Retire any existing active job for this racket
     const { data: existingJobs } = await supabase
       .from('string_jobs')
       .select('id')
@@ -77,11 +79,7 @@ export function useStringJobs(racketId?: string) {
   ) => {
     const { error } = await supabase
       .from('string_jobs')
-      .update({
-        is_active: false,
-        retirement_reason: reason,
-        retirement_date: retirementDate,
-      })
+      .update({ is_active: false, retirement_reason: reason, retirement_date: retirementDate })
       .eq('id', jobId)
 
     if (error) throw error

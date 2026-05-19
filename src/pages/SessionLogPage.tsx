@@ -136,7 +136,7 @@ export function SessionLogPage({ user, onSignOut }: SessionLogPageProps) {
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-slate-900 truncate">{racket.name}</p>
                         <p className="text-xs text-slate-500 truncate">
-                          {racket.activeJob!.brand} {racket.activeJob!.model}
+                          {racket.activeJob!.mains_brand} {racket.activeJob!.mains_model}
                         </p>
                       </div>
                       <span className="text-xs text-slate-400 flex-shrink-0">

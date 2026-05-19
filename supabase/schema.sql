@@ -13,11 +13,16 @@ create table string_jobs (
   id uuid primary key default gen_random_uuid(),
   racket_id uuid not null references rackets(id) on delete cascade,
   user_id uuid not null references auth.users(id) on delete cascade,
-  brand text not null,
-  model text not null,
-  gauge text not null,
-  tension_mains integer not null,
-  tension_crosses integer,
+  -- Mains string
+  mains_brand text not null,
+  mains_model text not null,
+  mains_gauge text not null,
+  mains_tension integer not null,
+  -- Crosses string (null = same as mains / non-hybrid)
+  crosses_brand text,
+  crosses_model text,
+  crosses_gauge text,
+  crosses_tension integer,
   date_strung date not null,
   hour_threshold numeric(5,1) not null default 10,
   is_active boolean not null default true,
@@ -50,3 +55,14 @@ create table session_racket_entries (
 );
 alter table session_racket_entries enable row level security;
 create policy "users own entries" on session_racket_entries for all using (auth.uid() = user_id);
+
+-- ─── MIGRATION (run in Supabase SQL Editor if upgrading from v1 schema) ───────
+-- alter table string_jobs rename column brand to mains_brand;
+-- alter table string_jobs rename column model to mains_model;
+-- alter table string_jobs rename column gauge to mains_gauge;
+-- alter table string_jobs rename column tension_mains to mains_tension;
+-- alter table string_jobs drop column tension_crosses;
+-- alter table string_jobs add column crosses_brand text;
+-- alter table string_jobs add column crosses_model text;
+-- alter table string_jobs add column crosses_gauge text;
+-- alter table string_jobs add column crosses_tension integer;

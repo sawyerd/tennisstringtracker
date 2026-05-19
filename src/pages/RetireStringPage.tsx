@@ -86,11 +86,10 @@ export function RetireStringPage({ user, onSignOut }: RetireStringPageProps) {
             Current Strings
           </h3>
           <p className="text-base font-semibold text-slate-900">
-            {activeJob.brand} {activeJob.model}
+            {activeJob.mains_brand} {activeJob.mains_model}
           </p>
           <p className="text-sm text-slate-500 mt-0.5">
-            {activeJob.gauge}g &middot; {activeJob.tension_mains}
-            {activeJob.tension_crosses ? `/${activeJob.tension_crosses}` : ''} lbs
+            {activeJob.mains_gauge}g &middot; {activeJob.mains_tension} lbs
           </p>
           <p className="text-xs text-slate-400 mt-1">
             Strung on {new Date(activeJob.date_strung).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
